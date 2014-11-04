@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/cloudfoundry/cli/cf/formatters"
 )
 
 type ProgressReader struct {
 	ioReadSeeker io.ReadSeeker
-	read         int64
+	red          int64
 	total        int64
 }
 
@@ -25,11 +27,21 @@ func (progressReader *ProgressReader) Read(p []byte) (int, error) {
 
 	n, err := progressReader.ioReadSeeker.Read(p)
 
+	fmt.Println("read", n, " bytes")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	if progressReader.total > int64(0) {
-		progressReader.read += int64(n)
+		progressReader.red += int64(n)
+
+		if progressReader.total == progressReader.red {
+			fmt.Println(" " + "Upload complete.")
+			return n, err
+		}
 
 		if err == nil {
-			fmt.Printfi("\x0c%dK uploaded", progressReader.read/int64(1024))
+			fmt.Printf("\r%s uploaded.", formatters.ByteSize(progressReader.red))
 		}
 	}
 
