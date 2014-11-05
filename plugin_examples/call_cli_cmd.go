@@ -26,6 +26,10 @@ func (c *CliCmd) GetMetadata() plugin.PluginMetadata {
 }
 
 func main() {
+
+cliConnection:
+	plugin.GetCliConnection()
+	cliConnection.Start()
 	plugin.Start(new(CliCmd))
 }
 

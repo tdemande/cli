@@ -165,7 +165,7 @@ func (cmd *PluginInstall) getShortNames() map[string]bool {
 }
 
 func (cmd *PluginInstall) runPluginBinary(location string, servicePort string) {
-	pluginInvocation := exec.Command(location, servicePort, "SendMetadata")
+	pluginInvocation := exec.Command(location, "CliPluginInvocation", servicePort, "SendMetadata")
 
 	err := pluginInvocation.Run()
 	if err != nil {

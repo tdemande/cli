@@ -21,7 +21,7 @@ func RunMethodIfExists(coreCommandRunner *cli.App, args []string, outputCapture 
 				}
 
 				defer cliServer.Stop()
-				pluginArgs := append([]string{cliServer.Port()}, args...)
+				pluginArgs := append([]string{"CliPluginInvocation", cliServer.Port()}, args...)
 				cmd := exec.Command(metadata.Location, pluginArgs...)
 				cmd.Stdout = os.Stdout
 				cmd.Stdin = os.Stdin
