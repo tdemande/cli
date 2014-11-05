@@ -19,6 +19,7 @@ import (
 	"github.com/cloudfoundry/cli/cf/configuration/core_config"
 	"github.com/cloudfoundry/cli/cf/errors"
 	. "github.com/cloudfoundry/cli/cf/i18n"
+	"github.com/cloudfoundry/cli/cf/terminal"
 )
 
 const (
@@ -63,14 +64,16 @@ type Gateway struct {
 	warnings        *[]string
 	Clock           func() time.Time
 	transport       *http.Transport
+	ui              terminal.UI
 }
 
-func newGateway(errHandler apiErrorHandler, config core_config.Reader) (gateway Gateway) {
+func newGateway(errHandler apiErrorHandler, config core_config.Reader, ui terminal.UI) (gateway Gateway) {
 	gateway.errHandler = errHandler
 	gateway.config = config
 	gateway.PollingThrottle = DEFAULT_POLLING_THROTTLE
 	gateway.warnings = &[]string{}
 	gateway.Clock = time.Now
+	gateway.ui = ui
 
 	return
 }
@@ -186,7 +189,7 @@ func (gateway Gateway) createUpdateOrDeleteResource(verb, url string, body io.Re
 }
 
 func (gateway Gateway) NewRequest(method, path, accessToken string, body io.ReadSeeker) (req *Request, apiErr error) {
-	progressReader := NewProgressReader(body)
+	progressReader := NewProgressReader(body, gateway.ui)
 
 	if body != nil {
 		progressReader.Seek(0, 0)
@@ -215,7 +218,7 @@ func (gateway Gateway) NewRequest(method, path, accessToken string, body io.Read
 			}
 			fileSize := fileStats.Size()
 			request.ContentLength = fileSize
-			progressReader.total = fileSize
+			progressReader.SetTotalSize(fileSize)
 		}
 	}
 
