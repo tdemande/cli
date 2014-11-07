@@ -1025,6 +1025,11 @@
       "modified": false
    },
    {
+      "id": "Cannot list plan information for {{.ServiceName}} without a targeted space",
+      "translation": "Cannot list plan information for {{.ServiceName}} without a targeted space",
+      "modified": false
+   },
+   {
       "id": "Cannot provision instances of paid service plans",
       "translation": "Incapable de provisioner des instance de service à plan payé",
       "modified": false
@@ -2157,6 +2162,16 @@
    {
       "id": "Getting service brokers as {{.Username}}...\n",
       "translation": "Obtenir courtiers de services comme {{.Username}}...",
+      "modified": false
+   },
+   {
+      "id": "Getting service plan information for service {{.ServiceName}} as {{.CurrentUser}}...",
+      "translation": "Getting service plan information for service {{.ServiceName}} as {{.CurrentUser}}...",
+      "modified": false
+   },
+   {
+      "id": "Getting service plan information for service {{.ServiceName}}...",
+      "translation": "Getting service plan information for service {{.ServiceName}}...",
       "modified": false
    },
    {
@@ -3350,6 +3365,11 @@
       "modified": false
    },
    {
+      "id": "Service offering not found",
+      "translation": "Service offering not found",
+      "modified": false
+   },
+   {
       "id": "Service {{.ServiceName}} does not exist.",
       "translation": "Service de {{.ServiceName}} n'existe pas.",
       "modified": false
@@ -3437,6 +3457,11 @@
    {
       "id": "Show org users by role",
       "translation": "Afficher les utilisateurs de l'org par rôle",
+      "modified": false
+   },
+   {
+      "id": "Show plan details for a particular service offering",
+      "translation": "Show plan details for a particular service offering",
       "modified": false
    },
    {
@@ -4190,6 +4215,11 @@
       "modified": false
    },
    {
+      "id": "free or paid",
+      "translation": "free or paid",
+      "modified": false
+   },
+   {
       "id": "host",
       "translation": "hôte",
       "modified": false
@@ -4387,6 +4417,11 @@
    {
       "id": "service instances",
       "translation": "instance de services",
+      "modified": false
+   },
+   {
+      "id": "service plan",
+      "translation": "service plan",
       "modified": false
    },
    {
