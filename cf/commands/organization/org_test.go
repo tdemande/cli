@@ -77,7 +77,7 @@ var _ = Describe("org command", func() {
 			org := models.Organization{}
 			org.Name = "my-org"
 			org.Guid = "my-org-guid"
-			org.QuotaDefinition = models.NewQuotaFields("cantina-quota", 512, 2, 5, true)
+			org.QuotaDefinition = models.NewQuotaFields("cantina-quota", 512, 256, 2, 5, true)
 			org.Spaces = []models.SpaceFields{developmentSpaceFields, stagingSpaceFields}
 			org.Domains = []models.DomainFields{domainFields, cfAppDomainFields}
 			org.SpaceQuotas = []models.SpaceQuota{
@@ -98,10 +98,24 @@ var _ = Describe("org command", func() {
 				[]string{"OK"},
 				[]string{"my-org"},
 				[]string{"domains:", "cfapps.io", "cf-app.com"},
-				[]string{"quota: ", "cantina-quota", "512M", "2 routes", "5 services", "paid services allowed"},
+				[]string{"quota: ", "cantina-quota", "512M", "256M instance memory limit", "2 routes", "5 services", "paid services allowed"},
 				[]string{"spaces:", "development", "staging"},
 				[]string{"space quotas:", "space-quota-1", "space-quota-2"},
 			))
+		})
+
+		Context("when the guid flag is provided", func() {
+			It("shows only the org guid", func() {
+				runCommand("--guid", "my-org")
+
+				Expect(ui.Outputs).To(ContainSubstrings(
+					[]string{"my-org-guid"},
+				))
+
+				Expect(ui.Outputs).ToNot(ContainSubstrings(
+					[]string{"Getting info for org", "my-org", "my-user"},
+				))
+			})
 		})
 	})
 })

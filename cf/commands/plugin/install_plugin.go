@@ -49,6 +49,8 @@ func (cmd *PluginInstall) GetRequirements(_ requirements.Factory, c *cli.Context
 }
 
 func (cmd *PluginInstall) Run(c *cli.Context) {
+	var downloader fileutils.Downloader
+
 	pluginSourceFilepath := c.Args()[0]
 
 	if filepath.Dir(pluginSourceFilepath) == "." {
@@ -57,7 +59,11 @@ func (cmd *PluginInstall) Run(c *cli.Context) {
 
 	cmd.ui.Say(fmt.Sprintf(T("Installing plugin {{.PluginPath}}...", map[string]interface{}{"PluginPath": pluginSourceFilepath})))
 
-	cmd.ensureCandidatePluginBinaryExistsAtGivenPath(pluginSourceFilepath)
+	if !cmd.ensureCandidatePluginBinaryExistsAtGivenPath(pluginSourceFilepath) {
+		cmd.ui.Say("")
+		cmd.ui.Say(T("File not found locally, attempting to download binary file from internet ..."))
+		pluginSourceFilepath = cmd.tryDownloadPluginBinaryfromGivenPath(pluginSourceFilepath, downloader)
+	}
 
 	_, pluginExecutableName := filepath.Split(pluginSourceFilepath)
 
@@ -70,6 +76,13 @@ func (cmd *PluginInstall) Run(c *cli.Context) {
 	cmd.ensurePluginIsSafeForInstallation(pluginMetadata, pluginDestinationFilepath, pluginSourceFilepath)
 
 	cmd.installPlugin(pluginMetadata, pluginDestinationFilepath, pluginSourceFilepath)
+
+	if downloader != nil {
+		err := downloader.RemoveFile()
+		if err != nil {
+			cmd.ui.Say(T("Problem removing downloaded binary in temp directory: ") + err.Error())
+		}
+	}
 
 	cmd.ui.Ok()
 	cmd.ui.Say(fmt.Sprintf(T("Plugin {{.PluginName}} successfully installed.", map[string]interface{}{"PluginName": pluginMetadata.Name})))
@@ -104,20 +117,36 @@ func (cmd *PluginInstall) ensurePluginIsSafeForInstallation(pluginMetadata *plug
 	shortNames := cmd.getShortNames()
 
 	for _, pluginCmd := range pluginMetadata.Commands {
+		//check for command conflicting core commands/alias
 		if _, exists := cmd.coreCmds[pluginCmd.Name]; exists || shortNames[pluginCmd.Name] || pluginCmd.Name == "help" {
-			cmd.ui.Failed(fmt.Sprintf(T("Command `{{.Command}}` in the plugin being installed is a native CF command.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+			cmd.ui.Failed(fmt.Sprintf(T("Command `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
 				map[string]interface{}{"Command": pluginCmd.Name})))
+		}
+
+		//check for alias conflicting core command/alias
+		if _, exists := cmd.coreCmds[pluginCmd.Alias]; exists || shortNames[pluginCmd.Alias] || pluginCmd.Alias == "help" {
+			cmd.ui.Failed(fmt.Sprintf(T("Alias `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+				map[string]interface{}{"Command": pluginCmd.Alias})))
 		}
 
 		for installedPluginName, installedPlugin := range plugins {
 			for _, installedPluginCmd := range installedPlugin.Commands {
-				if installedPluginCmd.Name == pluginCmd.Name {
-					cmd.ui.Failed(fmt.Sprintf(T("`{{.Command}}` is a command in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
+
+				//check for command conflicting other plugin commands/alias
+				if installedPluginCmd.Name == pluginCmd.Name || installedPluginCmd.Alias == pluginCmd.Name {
+					cmd.ui.Failed(fmt.Sprintf(T("Command `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
 						map[string]interface{}{"Command": pluginCmd.Name, "PluginName": installedPluginName})))
+				}
+
+				//check for alias conflicting other plugin commands/alias
+				if pluginCmd.Alias != "" && (installedPluginCmd.Name == pluginCmd.Alias || installedPluginCmd.Alias == pluginCmd.Alias) {
+					cmd.ui.Failed(fmt.Sprintf(T("Alias `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
+						map[string]interface{}{"Command": pluginCmd.Alias, "PluginName": installedPluginName})))
 				}
 			}
 		}
 	}
+
 }
 
 func (cmd *PluginInstall) installPlugin(pluginMetadata *plugin.PluginMetadata, pluginDestinationFilepath, pluginSourceFilepath string) {
@@ -150,11 +179,30 @@ func (cmd *PluginInstall) runBinaryAndObtainPluginMetadata(pluginSourceFilepath 
 	return rpcService.RpcCmd.PluginMetadata
 }
 
-func (cmd *PluginInstall) ensureCandidatePluginBinaryExistsAtGivenPath(pluginSourceFilepath string) {
+func (cmd *PluginInstall) ensureCandidatePluginBinaryExistsAtGivenPath(pluginSourceFilepath string) bool {
 	_, err := os.Stat(pluginSourceFilepath)
 	if err != nil && os.IsNotExist(err) {
-		cmd.ui.Failed(fmt.Sprintf(T("Binary file '{{.BinaryFile}}' not found", map[string]interface{}{"BinaryFile": pluginSourceFilepath})))
+		return false
 	}
+	return true
+}
+
+func (cmd *PluginInstall) tryDownloadPluginBinaryfromGivenPath(pluginSourceFilepath string, downloader fileutils.Downloader) string {
+
+	savePath := os.TempDir()
+	downloader = fileutils.NewDownloader(savePath)
+	size, filename, err := downloader.DownloadFile(pluginSourceFilepath)
+
+	if err != nil {
+		cmd.ui.Failed(fmt.Sprintf(T("Download attempt failed: {{.Error}}\n\nUnable to install, plugin is not available from local/internet.", map[string]interface{}{"Error": err.Error()})))
+	}
+
+	cmd.ui.Say(fmt.Sprintf("%d "+T("bytes downloaded")+"...", size))
+
+	executablePath := filepath.Join(savePath, filename)
+	os.Chmod(executablePath, 0700)
+
+	return executablePath
 }
 
 func (cmd *PluginInstall) getShortNames() map[string]bool {

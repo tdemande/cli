@@ -22,17 +22,20 @@ func (resource ApplicationSummaries) ToModels() (apps []models.ApplicationFields
 }
 
 type ApplicationFromSummary struct {
-	Guid             string
-	Name             string
-	Routes           []RouteSummary
-	RunningInstances int `json:"running_instances"`
-	Memory           int64
-	Instances        int
-	DiskQuota        int64 `json:"disk_quota"`
-	Urls             []string
-	State            string
-	SpaceGuid        string     `json:"space_guid"`
-	PackageUpdatedAt *time.Time `json:"package_updated_at"`
+	Guid               string
+	Name               string
+	Routes             []RouteSummary
+	Services           []ServicePlanSummary
+	RunningInstances   int `json:"running_instances"`
+	Memory             int64
+	Instances          int
+	DiskQuota          int64 `json:"disk_quota"`
+	Urls               []string
+	EnvironmentVars    map[string]interface{} `json:"environment_json,omitempty"`
+	HealthCheckTimeout int                    `json:"health_check_timeout"`
+	State              string
+	SpaceGuid          string     `json:"space_guid"`
+	PackageUpdatedAt   *time.Time `json:"package_updated_at"`
 }
 
 func (resource ApplicationFromSummary) ToFields() (app models.ApplicationFields) {
@@ -46,17 +49,28 @@ func (resource ApplicationFromSummary) ToFields() (app models.ApplicationFields)
 	app.Memory = resource.Memory
 	app.SpaceGuid = resource.SpaceGuid
 	app.PackageUpdatedAt = resource.PackageUpdatedAt
+	app.HealthCheckTimeout = resource.HealthCheckTimeout
 
 	return
 }
 
 func (resource ApplicationFromSummary) ToModel() (app models.Application) {
 	app.ApplicationFields = resource.ToFields()
+
 	routes := []models.RouteSummary{}
 	for _, route := range resource.Routes {
 		routes = append(routes, route.ToModel())
 	}
 	app.Routes = routes
+
+	services := []models.ServicePlanSummary{}
+	for _, service := range resource.Services {
+		services = append(services, service.ToModel())
+	}
+
+	app.EnvironmentVars = resource.EnvironmentVars
+	app.Routes = routes
+	app.Services = services
 
 	return
 }
@@ -76,6 +90,12 @@ func (resource RouteSummary) ToModel() (route models.RouteSummary) {
 	route.Guid = resource.Guid
 	route.Host = resource.Host
 	route.Domain = domain
+	return
+}
+
+func (resource ServicePlanSummary) ToModel() (route models.ServicePlanSummary) {
+	route.Guid = resource.Guid
+	route.Name = resource.Name
 	return
 }
 
@@ -125,5 +145,6 @@ func (repo CloudControllerAppSummaryRepository) GetSummary(appGuid string) (summ
 	}
 
 	summary = summaryResponse.ToModel()
+
 	return
 }

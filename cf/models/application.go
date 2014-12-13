@@ -8,8 +8,9 @@ import (
 
 type Application struct {
 	ApplicationFields
-	Stack  *Stack
-	Routes []RouteSummary
+	Stack    *Stack
+	Routes   []RouteSummary
+	Services []ServicePlanSummary
 }
 
 func (model Application) HasRoute(route Route) bool {
@@ -54,6 +55,7 @@ type ApplicationFields struct {
 	InstanceCount        int
 	Memory               int64 // in Megabytes
 	RunningInstances     int
+	HealthCheckTimeout   int
 	State                string
 	SpaceGuid            string
 	PackageUpdatedAt     *time.Time

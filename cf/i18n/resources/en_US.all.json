@@ -30,6 +30,11 @@
       "modified": false
    },
    {
+      "id": "\nNo api endpoint set.",
+      "translation": "\nNo api endpoint set.",
+      "modified": false
+   },
+   {
       "id": "\nRoute to be unmapped is not currently mapped to the application.",
       "translation": "\nRoute to be unmapped is not currently mapped to the application.",
       "modified": false
@@ -255,6 +260,16 @@
       "modified": false
    },
    {
+      "id": "Alias `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+      "translation": "Alias `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+      "modified": false
+   },
+   {
+      "id": "Alias `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
+      "translation": "Alias `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
+      "modified": false
+   },
+   {
       "id": "All plans of the service are already accessible for all orgs",
       "translation": "All plans of the service are already accessible for all orgs",
       "modified": false
@@ -405,11 +420,6 @@
       "modified": false
    },
    {
-      "id": "Binary file '{{.BinaryFile}}' not found",
-      "translation": "Binary file '{{.BinaryFile}}' not found",
-      "modified": false
-   },
-   {
       "id": "Bind a security group to a space",
       "translation": "Bind a security group to a space",
       "modified": false
@@ -457,11 +467,6 @@
    {
       "id": "Binding {{.URL}} to {{.AppName}}...",
       "translation": "Binding {{.URL}} to {{.AppName}}...",
-      "modified": false
-   },
-   {
-      "id": "Buildpack position among other buildpacks",
-      "translation": "Buildpack position among other buildpacks",
       "modified": false
    },
    {
@@ -530,6 +535,11 @@
       "modified": false
    },
    {
+      "id": "CF_NAME create-app-manifest [-p /path/to/\u003capp-name\u003e-manifest.yml ]",
+      "translation": "CF_NAME create-app-manifest [-p /path/to/\u003capp-name\u003e-manifest.yml ]",
+      "modified": false
+   },
+   {
       "id": "CF_NAME create-buildpack BUILDPACK PATH POSITION [--enable|--disable]",
       "translation": "CF_NAME create-buildpack BUILDPACK PATH POSITION [--enable|--disable]",
       "modified": false
@@ -580,8 +590,8 @@
       "modified": false
    },
    {
-      "id": "CF_NAME create-space SPACE [-o ORG]",
-      "translation": "CF_NAME create-space SPACE [-o ORG]",
+      "id": "CF_NAME create-space SPACE [-o ORG] [-q SPACE-QUOTA]",
+      "translation": "CF_NAME create-space SPACE [-o ORG] [-q SPACE-QUOTA]",
       "modified": false
    },
    {
@@ -700,8 +710,8 @@
       "modified": false
    },
    {
-      "id": "CF_NAME feature-flag",
-      "translation": "CF_NAME feature-flag",
+      "id": "CF_NAME feature-flag FEATURE_NAME",
+      "translation": "CF_NAME feature-flag FEATURE_NAME",
       "modified": false
    },
    {
@@ -822,6 +832,11 @@
    {
       "id": "CF_NAME restart APP",
       "translation": "CF_NAME restart APP",
+      "modified": false
+   },
+   {
+      "id": "CF_NAME restart-app-instance APP INDEX",
+      "translation": "CF_NAME restart-app-instance APP INDEX",
       "modified": false
    },
    {
@@ -1020,8 +1035,8 @@
       "modified": false
    },
    {
-      "id": "CF_NAME update-user-provided-service SERVICE_INSTANCE [-p PARAMETERS] [-l SYSLOG-DRAIN-URL]'\n\nEXAMPLE:\n   CF_NAME update-user-provided-service oracle-db-mine -p '{\"username\":\"admin\",\"password\":\"pa55woRD\"}'\n   CF_NAME update-user-provided-service my-drain-service -l syslog://example.com",
-      "translation": "CF_NAME update-user-provided-service SERVICE_INSTANCE [-p PARAMETERS] [-l SYSLOG-DRAIN-URL]'\n\nEXAMPLE:\n   CF_NAME update-user-provided-service oracle-db-mine -p '{\"username\":\"admin\",\"password\":\"pa55woRD\"}'\n   CF_NAME update-user-provided-service my-drain-service -l syslog://example.com",
+      "id": "CF_NAME update-user-provided-service SERVICE_INSTANCE [-p CREDENTIALS] [-l SYSLOG-DRAIN-URL]'\n\nEXAMPLE:\n   CF_NAME update-user-provided-service oracle-db-mine -p '{\"username\":\"admin\",\"password\":\"pa55woRD\"}'\n   CF_NAME update-user-provided-service my-drain-service -l syslog://example.com",
+      "translation": "CF_NAME update-user-provided-service SERVICE_INSTANCE [-p CREDENTIALS] [-l SYSLOG-DRAIN-URL]'\n\nEXAMPLE:\n   CF_NAME update-user-provided-service oracle-db-mine -p '{\"username\":\"admin\",\"password\":\"pa55woRD\"}'\n   CF_NAME update-user-provided-service my-drain-service -l syslog://example.com",
       "modified": false
    },
    {
@@ -1110,8 +1125,13 @@
       "modified": false
    },
    {
-      "id": "Command `{{.Command}}` in the plugin being installed is a native CF command.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
-      "translation": "Command `{{.Command}}` in the plugin being installed is a native CF command.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+      "id": "Command `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+      "translation": "Command `{{.Command}}` in the plugin being installed is a native CF command/alias.  Rename the `{{.Command}}` command in the plugin being installed in order to enable its installation and use.",
+      "modified": false
+   },
+   {
+      "id": "Command `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
+      "translation": "Command `{{.Command}}` is a command/alias in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
       "modified": false
    },
    {
@@ -1265,8 +1285,18 @@
       "modified": false
    },
    {
+      "id": "Create an app manifest for an app that has been pushed successfully.",
+      "translation": "Create an app manifest for an app that has been pushed successfully.",
+      "modified": false
+   },
+   {
       "id": "Create an org",
       "translation": "Create an org",
+      "modified": false
+   },
+   {
+      "id": "Creating an app manifest from current settings of app ",
+      "translation": "Creating an app manifest from current settings of app ",
       "modified": false
    },
    {
@@ -1392,6 +1422,11 @@
    {
       "id": "DOMAINS",
       "translation": "DOMAINS",
+      "modified": false
+   },
+   {
+      "id": "Dashboard: {{.URL}}",
+      "translation": "Dashboard: {{.URL}}",
       "modified": false
    },
    {
@@ -1575,8 +1610,8 @@
       "modified": false
    },
    {
-      "id": "Disable the buildpack",
-      "translation": "Disable the buildpack",
+      "id": "Disable the buildpack from being used for staging",
+      "translation": "Disable the buildpack from being used for staging",
       "modified": false
    },
    {
@@ -1645,6 +1680,11 @@
       "modified": false
    },
    {
+      "id": "Download attempt failed: {{.Error}}\n\nUnable to install, plugin is not available from local/internet.",
+      "translation": "Download attempt failed: {{.Error}}\n\nUnable to install, plugin is not available from local/internet.",
+      "modified": false
+   },
+   {
       "id": "Dump recent logs instead of tailing",
       "translation": "Dump recent logs instead of tailing",
       "modified": false
@@ -1655,8 +1695,8 @@
       "modified": false
    },
    {
-      "id": "ENVIRONMENT VARIABLES",
-      "translation": "ENVIRONMENT VARIABLES",
+      "id": "ENVIRONMENT VARIABLES:",
+      "translation": "ENVIRONMENT VARIABLES:",
       "modified": false
    },
    {
@@ -1695,8 +1735,8 @@
       "modified": false
    },
    {
-      "id": "Enable the buildpack",
-      "translation": "Enable the buildpack",
+      "id": "Enable the buildpack to be used for staging",
+      "translation": "Enable the buildpack to be used for staging",
       "modified": false
    },
    {
@@ -1732,6 +1772,11 @@
    {
       "id": "Error building request",
       "translation": "Error building request",
+      "modified": false
+   },
+   {
+      "id": "Error creating manifest file: ",
+      "translation": "Error creating manifest file: ",
       "modified": false
    },
    {
@@ -1812,6 +1857,11 @@
    {
       "id": "Error finding space {{.SpaceName}}\n{{.Err}}",
       "translation": "Error finding space {{.SpaceName}}\n{{.Err}}",
+      "modified": false
+   },
+   {
+      "id": "Error getting application summary: ",
+      "translation": "Error getting application summary: ",
       "modified": false
    },
    {
@@ -2035,6 +2085,11 @@
       "modified": false
    },
    {
+      "id": "File not found locally, attempting to download binary file from internet ...",
+      "translation": "File not found locally, attempting to download binary file from internet ...",
+      "modified": false
+   },
+   {
       "id": "Force delete (do not prompt for confirmation)",
       "translation": "Force delete (do not prompt for confirmation)",
       "modified": false
@@ -2060,8 +2115,8 @@
       "modified": false
    },
    {
-      "id": "GLOBAL OPTIONS",
-      "translation": "GLOBAL OPTIONS",
+      "id": "GLOBAL OPTIONS:",
+      "translation": "GLOBAL OPTIONS:",
       "modified": false
    },
    {
@@ -2325,6 +2380,11 @@
       "modified": false
    },
    {
+      "id": "Instance must be a non-negative integer",
+      "translation": "Instance must be a non-negative integer",
+      "modified": false
+   },
+   {
       "id": "Invalid JSON response from server",
       "translation": "Invalid JSON response from server",
       "modified": false
@@ -2525,8 +2585,8 @@
       "modified": false
    },
    {
-      "id": "Lock the buildpack",
-      "translation": "Lock the buildpack",
+      "id": "Lock the buildpack to prevent updates",
+      "translation": "Lock the buildpack to prevent updates",
       "modified": false
    },
    {
@@ -2557,6 +2617,11 @@
    {
       "id": "Make a user-provided service instance available to cf apps",
       "translation": "Make a user-provided service instance available to cf apps",
+      "modified": false
+   },
+   {
+      "id": "Manifest file created successfully at ",
+      "translation": "Manifest file created successfully at ",
       "modified": false
    },
    {
@@ -2885,11 +2950,6 @@
       "modified": false
    },
    {
-      "id": "Parameters",
-      "translation": "Parameters",
-      "modified": false
-   },
-   {
       "id": "Pass parameters as JSON to create a running environment variable group",
       "translation": "Pass parameters as JSON to create a running environment variable group",
       "modified": false
@@ -3010,6 +3070,11 @@
       "modified": false
    },
    {
+      "id": "Problem removing downloaded binary in temp directory: ",
+      "translation": "Problem removing downloaded binary in temp directory: ",
+      "modified": false
+   },
+   {
       "id": "Property '{{.PropertyName}}' found in manifest. This feature is no longer supported. Please remove it and try again.",
       "translation": "Property '{{.PropertyName}}' found in manifest. This feature is no longer supported. Please remove it and try again.",
       "modified": false
@@ -3042,6 +3107,11 @@
    {
       "id": "Quota to assign to the newly created org (excluding this option results in assignment of default quota)",
       "translation": "Quota to assign to the newly created org (excluding this option results in assignment of default quota)",
+      "modified": false
+   },
+   {
+      "id": "Quota to assign to the newly created space (excluding this option results in assignment of default quota)",
+      "translation": "Quota to assign to the newly created space (excluding this option results in assignment of default quota)",
       "modified": false
    },
    {
@@ -3112,6 +3182,11 @@
    {
       "id": "Remove a url route from an app",
       "translation": "Remove a url route from an app",
+      "modified": false
+   },
+   {
+      "id": "Remove all api endpoint targeting",
+      "translation": "Remove all api endpoint targeting",
       "modified": false
    },
    {
@@ -3225,6 +3300,11 @@
       "modified": false
    },
    {
+      "id": "Restarting instance {{.Instance}} of application {{.AppName}} as {{.Username}}",
+      "translation": "Restarting instance {{.Instance}} of application {{.AppName}} as {{.Username}}",
+      "modified": false
+   },
+   {
       "id": "Retrieve an individual feature flag with status",
       "translation": "Retrieve an individual feature flag with status",
       "modified": false
@@ -3237,6 +3317,21 @@
    {
       "id": "Retrieve and display the given app's guid.  All other health and status output for the app is suppressed.",
       "translation": "Retrieve and display the given app's guid.  All other health and status output for the app is suppressed.",
+      "modified": false
+   },
+   {
+      "id": "Retrieve and display the given org's guid.  All other output for the org is suppressed.",
+      "translation": "Retrieve and display the given org's guid.  All other output for the org is suppressed.",
+      "modified": false
+   },
+   {
+      "id": "Retrieve and display the given service's guid.  All other output for the service is suppressed.",
+      "translation": "Retrieve and display the given service's guid.  All other output for the service is suppressed.",
+      "modified": false
+   },
+   {
+      "id": "Retrieve and display the given space's guid.  All other output for the space is suppressed.",
+      "translation": "Retrieve and display the given space's guid.  All other output for the space is suppressed.",
       "modified": false
    },
    {
@@ -3580,6 +3675,11 @@
       "modified": false
    },
    {
+      "id": "Specify a path for file creation.  If path not specified, file is create in root directory of the application source code.",
+      "translation": "Specify a path for file creation.  If path not specified, file is create in root directory of the application source code.",
+      "modified": false
+   },
+   {
       "id": "Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)",
       "translation": "Stack to use (a stack is a pre-built file system, including an operating system, that can run apps)",
       "modified": false
@@ -3695,8 +3795,18 @@
       "modified": false
    },
    {
+      "id": "Terminate the running application Instance at the given index and instantiate a new instance of the application with the same index",
+      "translation": "Terminate the running application Instance at the given index and instantiate a new instance of the application with the same index",
+      "modified": false
+   },
+   {
       "id": "The file {{.PluginExecutableName}} already exists under the plugin directory.\n",
       "translation": "The file {{.PluginExecutableName}} already exists under the plugin directory.\n",
+      "modified": false
+   },
+   {
+      "id": "The order in which the buildpacks are checked during buildpack auto-detection",
+      "translation": "The order in which the buildpacks are checked during buildpack auto-detection",
       "modified": false
    },
    {
@@ -3905,8 +4015,13 @@
       "modified": false
    },
    {
-      "id": "Unlock the buildpack",
-      "translation": "Unlock the buildpack",
+      "id": "Unlock the buildpack to enable updates",
+      "translation": "Unlock the buildpack to enable updates",
+      "modified": false
+   },
+   {
+      "id": "Unsetting api endpoint...",
+      "translation": "Unsetting api endpoint...",
       "modified": false
    },
    {
@@ -4125,11 +4240,6 @@
       "modified": false
    },
    {
-      "id": "`{{.Command}}` is a command in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
-      "translation": "`{{.Command}}` is a command in plugin '{{.PluginName}}'.  You could try uninstalling plugin '{{.PluginName}}' and then install this plugin in order to invoke the `{{.Command}}` command.  However, you should first fully understand the impact of uninstalling the existing '{{.PluginName}}' plugin.",
-      "modified": false
-   },
-   {
       "id": "access",
       "translation": "access",
       "modified": false
@@ -4192,6 +4302,11 @@
    {
       "id": "broker: {{.Name}}",
       "translation": "broker: {{.Name}}",
+      "modified": false
+   },
+   {
+      "id": "bytes downloaded",
+      "translation": "bytes downloaded",
       "modified": false
    },
    {
@@ -4680,8 +4795,8 @@
       "modified": false
    },
    {
-      "id": "{{.QuotaName}} ({{.MemoryLimit}}M memory limit, {{.RoutesLimit}} routes, {{.ServicesLimit}} services, paid services {{.NonBasicServicesAllowed}})",
-      "translation": "{{.QuotaName}} ({{.MemoryLimit}}M memory limit, {{.RoutesLimit}} routes, {{.ServicesLimit}} services, paid services {{.NonBasicServicesAllowed}})",
+      "id": "{{.QuotaName}} ({{.MemoryLimit}}M memory limit, {{.InstanceMemoryLimit}} instance memory limit, {{.RoutesLimit}} routes, {{.ServicesLimit}} services, paid services {{.NonBasicServicesAllowed}})",
+      "translation": "{{.QuotaName}} ({{.MemoryLimit}}M memory limit, {{.InstanceMemoryLimit}} instance memory limit, {{.RoutesLimit}} routes, {{.ServicesLimit}} services, paid services {{.NonBasicServicesAllowed}})",
       "modified": false
    },
    {

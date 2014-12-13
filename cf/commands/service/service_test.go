@@ -65,6 +65,7 @@ var _ = Describe("service command", func() {
 				serviceInstance.Guid = "service1-guid"
 				serviceInstance.ServicePlan = plan
 				serviceInstance.ServiceOffering = offering
+				serviceInstance.DashboardUrl = "some-url"
 				requirementsFactory.ServiceInstance = serviceInstance
 			})
 
@@ -77,8 +78,23 @@ var _ = Describe("service command", func() {
 					[]string{"Plan: ", "plan-name"},
 					[]string{"Description: ", "the-description"},
 					[]string{"Documentation url: ", "http://documentation.url"},
+					[]string{"Dashboard: ", "some-url"},
 				))
 				Expect(requirementsFactory.ServiceInstanceName).To(Equal("service1"))
+			})
+
+			Context("when the guid flag is provided", func() {
+				It("shows only the service guid", func() {
+					runCommand("--guid", "service1")
+
+					Expect(ui.Outputs).To(ContainSubstrings(
+						[]string{"service1-guid"},
+					))
+
+					Expect(ui.Outputs).ToNot(ContainSubstrings(
+						[]string{"Service instance:", "service1"},
+					))
+				})
 			})
 		})
 

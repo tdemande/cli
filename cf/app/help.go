@@ -75,7 +75,13 @@ func newAppPresenter(app *cli.App) (presenter appPresenter) {
 
 		for _, pluginMetadata := range plugins {
 			for _, cmd := range pluginMetadata.Commands {
-				pluginPresenter.Name = cmd.Name
+
+				if cmd.Alias == "" {
+					pluginPresenter.Name = cmd.Name
+				} else {
+					pluginPresenter.Name = cmd.Name + ", " + cmd.Alias
+				}
+
 				padding := strings.Repeat(" ", maxNameLen-utf8.RuneCountInString(pluginPresenter.Name))
 				pluginPresenter.Name = pluginPresenter.Name + padding
 				pluginPresenter.Description = cmd.HelpText
@@ -120,6 +126,7 @@ func newAppPresenter(app *cli.App) (presenter appPresenter) {
 					presentCommand("stop"),
 					presentCommand("restart"),
 					presentCommand("restage"),
+					presentCommand("restart-app-instance"),
 				}, {
 					presentCommand("events"),
 					presentCommand("files"),
@@ -132,6 +139,8 @@ func newAppPresenter(app *cli.App) (presenter appPresenter) {
 					presentCommand("stacks"),
 				}, {
 					presentCommand("copy-source"),
+				}, {
+					presentCommand("create-app-manifest"),
 				},
 			},
 		}, {
@@ -246,8 +255,8 @@ func newAppPresenter(app *cli.App) (presenter appPresenter) {
 			Name: T("SPACE ADMIN"),
 			CommandSubGroups: [][]cmdPresenter{
 				{
-					presentCommand("space-quota"),
 					presentCommand("space-quotas"),
+					presentCommand("space-quota"),
 					presentCommand("create-space-quota"),
 					presentCommand("update-space-quota"),
 					presentCommand("delete-space-quota"),
